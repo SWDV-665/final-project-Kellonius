@@ -1,0 +1,7 @@
+{
+  "name": "busybeas",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}
