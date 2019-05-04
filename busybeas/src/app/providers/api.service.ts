@@ -10,7 +10,7 @@ import { ServiceModel } from '../models/service-model';
 })
 export class ApiService {
 
-  public apiEndPoint = 'http://localhost:53264/'
+  public apiEndPoint = 'http://busybeasservice.azurewebsites.net/'
   public userController = 'User/'
   public requestController = 'Request/'
 
