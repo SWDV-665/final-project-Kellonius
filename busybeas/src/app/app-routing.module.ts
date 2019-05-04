@@ -18,7 +18,9 @@ const routes: Routes = [
   {
     path: 'pricing-services',
     loadChildren: './pricing-services/pricing-services.module#PricingServicesPageModule'
-  }
+  },
+  { path: 'profile', loadChildren: './profile/profile.module#ProfilePageModule' },
+  { path: 'client-details', loadChildren: './client-details/client-details.module#ClientDetailsPageModule' }
 ];
 
 @NgModule({

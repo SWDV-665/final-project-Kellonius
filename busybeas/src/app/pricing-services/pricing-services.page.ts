@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ToastController } from '@ionic/angular';
+import { ClientService } from '../providers/client.service';
+import { RequestService } from '../providers/request.service';
+import { ServiceModel } from '../models/service-model';
+import { LoginService } from '../providers/login.service';
 
 @Component({
   selector: 'app-pricing-services',
@@ -8,96 +12,87 @@ import { AlertController } from '@ionic/angular';
 })
 export class PricingServicesPage implements OnInit {
 
-  public items: Array<{ title: string; note: string; }> = [
-    {
-      title: 'One time deep cleaning',
-      note: '$25.00/hr'
-    },
-    {
-      title: 'Recurring cleaning',
-      note: '$20.00/hr'
-    },
-    {
-      title: 'Item Minimalization',
-      note: '$20.00/hr'
-    },
-    {
-      title: 'Home Organization',
-      note: '$10.00/hr'
-    }
-  ];
-
-  constructor(private alertController: AlertController) { }
+  constructor(private alertController: AlertController,
+    private toastController: ToastController,
+    private clientService: ClientService,
+    private requestService: RequestService,
+    private loginService: LoginService
+  ) {
+  }
 
   ngOnInit() {
   }
 
-  async requestServices() {
-    const alert = await this.alertController.create({
-      header: 'Request Services and Information',
-      inputs: [
-        {
-          name: 'name',
-          type: 'text',
-          placeholder: 'Name'
-        },
-        {
-          name: 'email',
-          type: 'email',
-          placeholder: 'Email'
-        },
-        {
-          name: 'address',
-          type: 'text',
-          placeholder: 'Street Address'
-        },
-        {
-          name: 'city',
-          type: 'text',
-          placeholder: 'City'
-        },
-        {
-          name: 'state',
-          type: 'text',
-          placeholder: 'State'
-        },
-        {
-          name: 'zip',
-          type: 'text',
-          placeholder: 'Zip Code'
-        },
-        // {
-        //   name: 'info',
-        //   type: 'radio',
-        //   label: 'Seeking More Information',
-        //   value: 'Seeking More Inforation',
-        //   checked: true
-        // },
-        // {
-        //   name: 'services',
-        //   type: 'radio',
-        //   label: 'Requesting Services',
-        //   value: 'Requesting Services'
-        // }
+  async requestServices(serviceId: number) {
+    if (!this.loginService.userLoggedIn) {
+      const toast = await this.toastController.create({
+        message: 'Please log in to request services!',
+        duration: 2000
+      });
+      toast.present();
+    } else {
+      const alert = await this.alertController.create({
+        header: 'Request Services and Information',
+        inputs: [
+          {
+            name: 'date',
+            type: 'date'
+          },
+          {
+            name: 'name',
+            type: 'text',
+            placeholder: 'Name'
+          },
+          {
+            name: 'email',
+            type: 'email',
+            placeholder: 'Email'
+          },
+          // {
+          //   name: 'address',
+          //   type: 'text',
+          //   placeholder: 'Street Address'
+          // },
+          // {
+          //   name: 'city',
+          //   type: 'text',
+          //   placeholder: 'City'
+          // },
+          // {
+          //   name: 'state',
+          //   type: 'text',
+          //   placeholder: 'State'
+          // },
+          // {
+          //   name: 'zip',
+          //   type: 'text',
+          //   placeholder: 'Zip Code'
+          // }
 
-      ],
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          cssClass: 'secondary',
-          handler: () => {
-            console.log('Confirm Cancel');
+        ],
+        buttons: [
+          {
+            text: 'Cancel',
+            role: 'cancel',
+            cssClass: 'secondary',
+            handler: () => {
+              console.log('Confirm Cancel');
+            }
+          }, {
+            text: 'Send Request',
+            handler: x => {
+              this.requestService.requestService(x, serviceId);
+            }
           }
-        }, {
-          text: 'Send Request',
-          handler: x => {
-            // this.handleCreateAccount(x);
-          }
-        }
-      ]
-    });
+        ]
+      });
 
-    await alert.present();
+      await alert.present();
+    }
   }
+
+  getServices() {
+    return this.requestService.services;
+  }
+
 }

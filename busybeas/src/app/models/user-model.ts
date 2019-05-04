@@ -4,4 +4,8 @@ export class UserModel {
     firstName: string;
     lastName: string;
     isAdmin: boolean;
+
+    constructor(init?: UserModel) {
+        Object.assign(this,init);
+    }
 }

@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>profile</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+  <ion-item>
+    <ion-label position="stacked">First Name</ion-label>
+    <ion-input></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked">Last Name</ion-label>
+    <ion-input></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked">Address</ion-label>
+    <ion-input placeholder="Address Line 1" [(ngModel)]="lineOne"></ion-input>
+    <ion-input placeholder="Address Line 2" [(ngModel)]="lineTwo"></ion-input>
+    <ion-input placeholder="City" [(ngModel)]="city"></ion-input>
+    <ion-input placeholder="State" [(ngModel)]="state"></ion-input>
+    <ion-input placeholder="Zip Code" [(ngModel)]="zip"></ion-input>
+  </ion-item>
+
+  <ion-button size="default" (click)="updateProfile()">Update</ion-button>
+
+</ion-content>

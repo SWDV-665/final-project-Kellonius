@@ -4,6 +4,8 @@ import { Platform, AlertController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { LoginService } from './providers/login.service';
+import { ClientService } from './providers/client.service';
+import { RequestService } from './providers/request.service';
 
 
 @Component({
@@ -21,13 +23,16 @@ export class AppComponent {
       title: 'Pricing and Services',
       url: '/pricing-services',
       icon: 'cash'
-    },
+    }
+  ];
+
+  public adminPages = [
     {
       title: 'Client List',
       url: '/list',
       icon: 'list'
     }
-  ];
+  ]
 
   userLoggedIn: boolean = false;
 
@@ -36,13 +41,16 @@ export class AppComponent {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private alertController: AlertController,
-    private loginService: LoginService
+    private loginService: LoginService,
+    private clientService: ClientService,
+    private requestService: RequestService
   ) {
 
     this.initializeApp();
     loginService.dataChanged$.subscribe(uli => {
       this.getUserLoggedIn();
     })
+    this.requestService.getServices();
   }
 
   initializeApp() {
@@ -54,7 +62,7 @@ export class AppComponent {
 
   logoutClick() {
     this.loginService.handleLogout();
-    }
+  }
 
   async loginClick() {
     const alert = await this.alertController.create({
@@ -144,5 +152,6 @@ export class AppComponent {
   getUserLoggedIn() {
     this.userLoggedIn = this.loginService.userLoggedIn;
   }
+
 
 }

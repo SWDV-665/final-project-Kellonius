@@ -16,10 +16,20 @@
           <ion-item *ngIf="userLoggedIn">
             <ion-icon slot="start" name="log-out"></ion-icon>        
             <ion-button expand="full" (click)="logoutClick()">Logout</ion-button>
-            {{loginService.currentUser.email}} 
+            <ion-button expand="full" [routerDirection]="'root'" [routerLink]="['/profile']">Manage Profile</ion-button>
+            <ion-label *ngIf="!clientService.hasAddress" style="color:red;">Address required.</ion-label>
+            <ion-label *ngIf="clientService.hasAddress">{{loginService.currentUser.email}}</ion-label>
           </ion-item>
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
             <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">
+              <ion-icon slot="start" [name]="p.icon"></ion-icon>
+              <ion-label>
+                {{p.title}}
+              </ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+          <ion-menu-toggle *ngIf="loginService.adminLoggedIn" auto-hide="false">
+            <ion-item  *ngFor="let p of adminPages" [routerDirection]="'root'" [routerLink]="[p.url]">
               <ion-icon slot="start" [name]="p.icon"></ion-icon>
               <ion-label>
                 {{p.title}}

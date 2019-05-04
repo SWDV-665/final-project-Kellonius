@@ -4,6 +4,7 @@ import { UserModel } from '../models/user-model';
 import { ToastController } from '@ionic/angular';
 import * as moment from 'moment'
 import { Observable, Subject } from 'rxjs';
+import { ClientService } from './client.service';
 
 // import { hash } from 'bcrypt'
 
@@ -24,7 +25,8 @@ export class LoginService {
 
   constructor(
     private apiService: ApiService,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private clientService: ClientService
   ) {
     this.dataChangedSubject = new Subject<boolean>();
     this.dataChanged$ = this.dataChangedSubject.asObservable();
@@ -59,6 +61,8 @@ export class LoginService {
       this.dataChangedSubject.next(true)
 
       this.loginToast( x.firstName, x.lastName);
+      this.clientService.getClients();
+      this.clientService.getAddress(x.id.toString());
       return
 
     }, error => {
@@ -107,7 +111,7 @@ export class LoginService {
 
   async loginToast(first?: string, last?: string) {
       const toast = await this.toastController.create({
-        message: 'Welcome back ' + first + ' ' + last + '!',
+        message: 'Welcome back ' + this.capitalizeFirstLetter(first) + ' ' + this.capitalizeFirstLetter(last) + '!',
         duration: 2000
       });
       toast.present();
@@ -127,6 +131,10 @@ async errorToast(error: string) {
     duration: 2000
   });
   toast.present();
+}
+
+capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
 }
