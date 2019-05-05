@@ -87,7 +87,7 @@ export class LoginService {
   hashString(word: string) {
 
     var cipherFinish = '';
-    let key = moment().date()
+    let key = 5
     key = (key % this.alphabet.length);
     word = word.toLowerCase();
     

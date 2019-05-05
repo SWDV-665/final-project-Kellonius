@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { UserModel } from '../models/user-model';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { AddressModel } from '../models/address-model';
-import { ServiceModel } from '../models/service-model';
+import { ServiceModel, ServiceRequestModel } from '../models/service-model';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +21,7 @@ export class ApiService {
   public GetAddressEndPoint = 'GetAddress';
   public CreateRequestEndPoint = 'CreateRequest';
   public GetServicesEndPoint = 'GetServices';
+  public GetRequestedServicesEndPoint = 'GetRequestedServices';
 
   constructor(public http: HttpClient) { }
 
@@ -52,8 +53,14 @@ export class ApiService {
     const params = new HttpParams().set('uId', userId).set('date', account.date).set('sId', serviceId.toString()).set('email', account.email)
     return this.http.get(this.apiEndPoint + this.requestController + this.CreateRequestEndPoint, {params})
   }
+
   getServices(): Observable<ServiceModel[]> {
     return this.http.get<ServiceModel[]>(this.apiEndPoint + this.requestController + this.GetServicesEndPoint)
+  }
+
+  GetRequestedServices(userId: string): Observable<ServiceRequestModel[]>{
+    const params = new HttpParams().set('userId', userId)
+    return this.http.get<ServiceRequestModel[]>(this.apiEndPoint + this.requestController + this.GetRequestedServicesEndPoint, {params})
   }
 
 }

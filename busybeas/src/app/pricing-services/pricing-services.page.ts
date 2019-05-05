@@ -30,7 +30,14 @@ export class PricingServicesPage implements OnInit {
         duration: 2000
       });
       toast.present();
-    } else {
+    } else if (!this.clientService.hasAddress) {
+      const toast = await this.toastController.create({
+        message: 'Please "manage profile" and add address to request services.',
+        duration: 2000
+      });
+      toast.present();
+    }
+    else {
       const alert = await this.alertController.create({
         header: 'Request Services and Information',
         inputs: [
@@ -48,26 +55,6 @@ export class PricingServicesPage implements OnInit {
             type: 'email',
             placeholder: 'Email'
           },
-          // {
-          //   name: 'address',
-          //   type: 'text',
-          //   placeholder: 'Street Address'
-          // },
-          // {
-          //   name: 'city',
-          //   type: 'text',
-          //   placeholder: 'City'
-          // },
-          // {
-          //   name: 'state',
-          //   type: 'text',
-          //   placeholder: 'State'
-          // },
-          // {
-          //   name: 'zip',
-          //   type: 'text',
-          //   placeholder: 'Zip Code'
-          // }
 
         ],
         buttons: [
@@ -90,6 +77,47 @@ export class PricingServicesPage implements OnInit {
       await alert.present();
     }
   }
+  async sendEmail() {
+    const alert = await this.alertController.create({
+      header: 'Request Services and Information',
+      inputs: [
+        {
+          name: 'name',
+          type: 'text',
+          placeholder: 'Name'
+        },
+        {
+          name: 'email',
+          type: 'email',
+          placeholder: 'Email'
+        },
+        {
+          name: 'question',
+          type: 'text',
+          placeholder: 'Ask a question here.'
+        }
+
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Confirm Cancel');
+          }
+        }, {
+          text: 'Send Request',
+          handler: x => {
+            // this.requestService.requestService(x, serviceId);
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+  
 
   getServices() {
     return this.requestService.services;
