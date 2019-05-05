@@ -5,6 +5,7 @@ import { ToastController } from '@ionic/angular';
 import * as moment from 'moment'
 import { Observable, Subject } from 'rxjs';
 import { ClientService } from './client.service';
+import { AddressModel } from '../models/address-model';
 
 // import { hash } from 'bcrypt'
 
@@ -36,6 +37,7 @@ export class LoginService {
     this.adminLoggedIn = false;
     this.userLoggedIn = false;
     this.currentUser = new UserModel();
+    this.clientService.currentAddress = new AddressModel();
     this.dataChangedSubject.next(true)
     this.logoutToast();
   }

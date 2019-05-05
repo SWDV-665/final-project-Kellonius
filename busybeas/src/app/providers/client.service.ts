@@ -10,6 +10,7 @@ export class ClientService {
 
   clientList: UserModel[] = new Array<UserModel>();
   currentAddress: AddressModel;
+  clientAddress: AddressModel = new AddressModel();
   hasAddress: boolean = false;
   
 
@@ -32,6 +33,12 @@ export class ClientService {
       if (x.id != null){
         this.hasAddress = true;
       }
+    });
+  }
+
+  getClientaddress(userId: number) {
+    this.apiService.GetAddress(userId.toString()).subscribe(x => {
+      this.clientAddress = x;
     });
   }
 

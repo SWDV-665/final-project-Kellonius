@@ -5,5 +5,24 @@
 </ion-header>
 
 <ion-content>
-
+    <ion-item>
+        <ion-label position="stacked">First Name</ion-label>
+        <ion-input [(ngModel)]="firstName"></ion-input>
+      </ion-item>
+    
+      <ion-item>
+        <ion-label position="stacked">Last Name</ion-label>
+        <ion-input [(ngModel)]="lastName"></ion-input>
+      </ion-item>
+    
+      <ion-item>
+        <ion-label position="stacked">Address</ion-label>
+        <ion-input placeholder="Address Line 1" [(ngModel)]="clientService.clientAddress.streetOne"></ion-input>
+        <ion-input placeholder="Address Line 2" [(ngModel)]="clientService.clientAddress.streetTwo"></ion-input>
+        <ion-input placeholder="City" [(ngModel)]="clientService.clientAddress.city"></ion-input>
+        <ion-input placeholder="State" [(ngModel)]="clientService.clientAddress.state"></ion-input>
+        <ion-input placeholder="Zip Code" [(ngModel)]="clientService.clientAddress.zip"></ion-input>
+      </ion-item>
+    
+      <ion-button size="default" (click)="updateProfile()">Update</ion-button>
 </ion-content>

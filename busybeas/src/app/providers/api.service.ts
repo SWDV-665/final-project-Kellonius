@@ -55,4 +55,5 @@ export class ApiService {
   getServices(): Observable<ServiceModel[]> {
     return this.http.get<ServiceModel[]>(this.apiEndPoint + this.requestController + this.GetServicesEndPoint)
   }
+
 }

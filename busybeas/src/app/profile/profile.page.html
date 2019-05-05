@@ -8,12 +8,12 @@
 <ion-content>
   <ion-item>
     <ion-label position="stacked">First Name</ion-label>
-    <ion-input></ion-input>
+    <ion-input [(ngModel)]="this.loginService.currentUser.firstName"></ion-input>
   </ion-item>
 
   <ion-item>
     <ion-label position="stacked">Last Name</ion-label>
-    <ion-input></ion-input>
+    <ion-input [(ngModel)]="this.loginService.currentUser.lastName"></ion-input>
   </ion-item>
 
   <ion-item>
